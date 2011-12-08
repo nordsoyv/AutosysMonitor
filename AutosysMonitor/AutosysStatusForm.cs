@@ -86,7 +86,7 @@ namespace AutosysMonitor
         private void updateAutosysSystem(AutosysSystem system)
         {
             var request = WebRequest.Create(system.URL);
-            request.Timeout = 1000;
+            request.Timeout = 2000;
             WebResponse response;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -222,6 +222,12 @@ namespace AutosysMonitor
             ReadSystemsFromFile(openSystemFileDialog.FileName);
             SystemView.Invalidate();
             SystemView.Update();
+        }
+
+        private void StatusForm_Resize(object sender, EventArgs e)
+        {
+            var width = this.Width;
+            SystemView.Width = width - 50;
         }
 
 

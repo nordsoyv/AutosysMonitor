@@ -58,7 +58,7 @@
             // 
             // UpdateAllButton
             // 
-            this.UpdateAllButton.Location = new System.Drawing.Point(625, 33);
+            this.UpdateAllButton.Location = new System.Drawing.Point(15, 32);
             this.UpdateAllButton.Name = "UpdateAllButton";
             this.UpdateAllButton.Size = new System.Drawing.Size(103, 23);
             this.UpdateAllButton.TabIndex = 1;
@@ -150,7 +150,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.SystemView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.SystemView.Location = new System.Drawing.Point(15, 32);
+            this.SystemView.Location = new System.Drawing.Point(15, 61);
             this.SystemView.Name = "SystemView";
             this.SystemView.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -161,7 +161,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.SystemView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.SystemView.Size = new System.Drawing.Size(604, 488);
+            this.SystemView.Size = new System.Drawing.Size(706, 459);
             this.SystemView.TabIndex = 0;
             this.SystemView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SystemView_CellContentClick);
             this.SystemView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.SystemView_CellPainting);
@@ -203,7 +203,7 @@
             // 
             // ReloadFileButton
             // 
-            this.ReloadFileButton.Location = new System.Drawing.Point(626, 63);
+            this.ReloadFileButton.Location = new System.Drawing.Point(124, 32);
             this.ReloadFileButton.Name = "ReloadFileButton";
             this.ReloadFileButton.Size = new System.Drawing.Size(102, 23);
             this.ReloadFileButton.TabIndex = 7;
@@ -259,6 +259,7 @@
             this.Name = "StatusForm";
             this.Text = "Autosys status";
             this.Load += new System.EventHandler(this.StatusForm_Load);
+            this.Resize += new System.EventHandler(this.StatusForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.SystemView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.systemerDataSource)).EndInit();
             this.ResumeLayout(false);
