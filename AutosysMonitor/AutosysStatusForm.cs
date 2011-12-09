@@ -86,7 +86,7 @@ namespace AutosysMonitor
         private void updateAutosysSystem(AutosysSystem system)
         {
             var request = WebRequest.Create(system.URL);
-            request.Timeout = 2000;
+            request.Timeout = system.Timeout;
             WebResponse response;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();

@@ -9,6 +9,7 @@ namespace AutosysMonitor
     {
         public String Name { get; set; }
         public String URL { get; set; }
+        public int Timeout { get; set; }
         public bool Alive { get; set; }
         public long Ping { get; set; }
 

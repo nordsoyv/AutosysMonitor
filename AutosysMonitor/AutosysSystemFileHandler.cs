@@ -23,6 +23,18 @@ namespace AutosysMonitor
                 var sys = new AutosysSystem();
                 sys.Name = info[0];
                 sys.URL = info[1];
+
+                try
+                {
+
+                    sys.Timeout = int.Parse(info[2]);
+
+                }
+                catch (Exception)
+                {
+                    sys.Timeout = 2000;
+                }
+               
                 systemList.Add(sys);
 
             }
