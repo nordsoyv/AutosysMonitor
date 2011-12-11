@@ -57,6 +57,7 @@
       <DependentUpon>AutosysStatusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AutosysSystemFileHandler.cs" />
+    <Compile Include="IAutosysSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AutosysStatusForm.resx">
@@ -84,6 +85,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\systemer.txt" />
     <Content Include="Resources\Green-ball.png" />
     <Content Include="Resources\Red-ball.png" />
     <Content Include="systemer.txt" />

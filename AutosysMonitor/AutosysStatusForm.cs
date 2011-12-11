@@ -16,7 +16,7 @@ namespace AutosysMonitor
     {
         private const string SYSTEMS = "systemer.txt";
 
-        private List<AutosysSystem> systemList = new List<AutosysSystem>();
+        private List<IAutosysSystem> systemList = new List<IAutosysSystem>();
 
         public StatusForm()
         {
@@ -51,28 +51,15 @@ namespace AutosysMonitor
         }
 
 
-        private void SystemView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == this.UpdateColumn.DisplayIndex) // oppdaterknapp
-            {
-                var item = systemList[e.RowIndex];
-                updateAutosysSystem(item);
-                SystemView.Invalidate();
-                SystemView.Update();
-
-
-
-            }
-        }
 
         private void updateAll()
         {
-            List<AutosysSystem> tempList = new List<AutosysSystem>(systemList);
+            List<IAutosysSystem> tempList = new List<IAutosysSystem>(systemList);
 
 
-            foreach (AutosysSystem item in tempList)
+            foreach (IAutosysSystem item in tempList)
             {
-                updateAutosysSystem(item);
+				item.Update();
             }
 
 
@@ -83,37 +70,7 @@ namespace AutosysMonitor
             }
         }
 
-        private void updateAutosysSystem(AutosysSystem system)
-        {
-            var request = WebRequest.Create(system.URL);
-            request.Timeout = system.Timeout;
-            WebResponse response;
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            try
-            {
-                response = request.GetResponse();
-                stopwatch.Stop();
-                system.Ping = stopwatch.ElapsedMilliseconds;
-                system.Alive = true;
-            }
-            catch (WebException ex)
-            {
-                stopwatch.Stop();
-                system.Alive = false;
-                system.Ping = stopwatch.ElapsedMilliseconds;
-                return;
-            }
-            finally
-            {
-                request.Abort();
-            }
-
-
-        }
-
-
-        private void UpdateAllButton_Click(object sender, EventArgs e)
+		private void UpdateAllButton_Click(object sender, EventArgs e)
         {
 
             updateAll();
@@ -139,23 +96,6 @@ namespace AutosysMonitor
             updateAll();
         }
 
-        private void AddSystemButton_Click(object sender, EventArgs e)
-        {
-            var navn = navnTextbox.Text;
-            var url = urlTextbox.Text;
-
-            var systemer = File.AppendText(SYSTEMS);
-            systemer.WriteLine(navn + ";" + url);
-            systemer.Close();
-
-            var sys = new AutosysSystem();
-            sys.Alive = false;
-            sys.Name = navn;
-            sys.URL = url;
-            systemList.Add(sys);
-            UpdateDataSource();
-
-        }
 
         private void SystemView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -166,6 +106,8 @@ namespace AutosysMonitor
                 return;
             var sys = systemList[e.RowIndex];
             Image ball;
+			if(sys.GetType() == typeof(LineSplitter))
+				return;
             if (sys.Alive)
             {
                 //e.Value = global::AutosysMonitor.Properties.Resources.Red_ball;
@@ -229,6 +171,11 @@ namespace AutosysMonitor
             var width = this.Width;
             SystemView.Width = width - 50;
         }
+
+		private void systemerDataSource_CurrentChanged(object sender, EventArgs e)
+		{
+
+		}
 
 
     }

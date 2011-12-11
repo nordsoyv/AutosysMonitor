@@ -6,41 +6,59 @@ using System.IO;
 
 namespace AutosysMonitor
 {
-    class AutosysSystemFileHandler
-    {
+	class AutosysSystemFileHandler
+	{
 
-        public static List<AutosysSystem> ReadFromFile(string Filename)
-        {
-            var systemer = File.OpenText(Filename);
-            var systemList = new List<AutosysSystem>();
+		public static List<IAutosysSystem> ReadFromFile(string filename)
+		{
+			var systemer = File.OpenText(filename);
+			var systemList = new List<IAutosysSystem>();
 
-            while (!systemer.EndOfStream)
-            {
-                var line = systemer.ReadLine();
-                if (line.First() == '#')
-                    continue;
-                var info = line.Split(';');
-                var sys = new AutosysSystem();
-                sys.Name = info[0];
-                sys.URL = info[1];
+			while (!systemer.EndOfStream)
+			{
+				var line = systemer.ReadLine();
+				if (line.First() == '#')
+					continue;
+				if (line.First() == '-')
+				{
+					systemList.Add(CreateSplitter(line));
+				}
+				else
+				{
+					systemList.Add(CreateAutosysSystem(line));
+				}
 
-                try
-                {
+			}
+			systemer.Close();
 
-                    sys.Timeout = int.Parse(info[2]);
+			return systemList;
+		}
 
-                }
-                catch (Exception)
-                {
-                    sys.Timeout = 2000;
-                }
-               
-                systemList.Add(sys);
+		private static IAutosysSystem CreateSplitter(string line)
+		{
+			var info = line.Split(';');
+			var sys = new LineSplitter();
+			sys.Name = info[0].Substring(1);
+			sys.Url = "--------------";
+			return sys;
+		}
 
-            }
-            systemer.Close();
+		private static IAutosysSystem CreateAutosysSystem(String line)
+		{
+			var info = line.Split(';');
+			var sys = new AutosysSystem();
+			sys.Name = info[0];
+			sys.Url = info[1];
 
-            return systemList;
-        }
-    }
+			try
+			{
+				sys.Timeout = int.Parse(info[2]);
+			}
+			catch (Exception)
+			{
+				sys.Timeout = 2000;
+			}
+			return sys;
+		}
+	}
 }
