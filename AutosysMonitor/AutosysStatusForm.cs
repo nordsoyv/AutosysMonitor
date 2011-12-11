@@ -145,7 +145,8 @@ namespace AutosysMonitor
 		private void StatusForm_Resize(object sender, EventArgs e)
 		{
 			var width = this.Width;
-			SystemView.Width = width - 50;
+			SystemView.Width = width - SystemView.Location.X- 25;
+			SystemView.Height = Height - SystemView.Location.Y-50;
 		}
 
 		private void UpdateDataSource()

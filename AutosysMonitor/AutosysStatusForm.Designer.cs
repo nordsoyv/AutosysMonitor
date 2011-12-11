@@ -42,12 +42,12 @@
 			this.txtSetRefreshtime = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ckbRefreshEnabled = new System.Windows.Forms.CheckBox();
-			this.systemerDataSource = new System.Windows.Forms.BindingSource(this.components);
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.StatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.Url = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.aliveDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.Ping = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.aliveDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.systemerDataSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.SystemView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.systemerDataSource)).BeginInit();
 			this.SuspendLayout();
@@ -170,18 +170,6 @@
 			this.ckbRefreshEnabled.UseVisualStyleBackColor = true;
 			this.ckbRefreshEnabled.CheckedChanged += new System.EventHandler(this.ckbRefreshEnabled_CheckedChanged);
 			// 
-			// systemerDataSource
-			// 
-			this.systemerDataSource.DataSource = typeof(AutosysMonitor.IAutosysSystem);
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
-			this.dataGridViewTextBoxColumn1.HeaderText = "Name";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			this.dataGridViewTextBoxColumn1.ReadOnly = true;
-			this.dataGridViewTextBoxColumn1.Width = 60;
-			// 
 			// StatusColumn
 			// 
 			this.StatusColumn.HeaderText = "Status";
@@ -197,6 +185,22 @@
 			this.Url.ReadOnly = true;
 			this.Url.Width = 45;
 			// 
+			// Ping
+			// 
+			this.Ping.DataPropertyName = "Ping";
+			this.Ping.HeaderText = "Ping";
+			this.Ping.Name = "Ping";
+			this.Ping.ReadOnly = true;
+			this.Ping.Width = 53;
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
+			this.dataGridViewTextBoxColumn1.HeaderText = "Name";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			this.dataGridViewTextBoxColumn1.ReadOnly = true;
+			this.dataGridViewTextBoxColumn1.Width = 60;
+			// 
 			// aliveDataGridViewCheckBoxColumn
 			// 
 			this.aliveDataGridViewCheckBoxColumn.DataPropertyName = "Alive";
@@ -206,13 +210,9 @@
 			this.aliveDataGridViewCheckBoxColumn.Visible = false;
 			this.aliveDataGridViewCheckBoxColumn.Width = 36;
 			// 
-			// Ping
+			// systemerDataSource
 			// 
-			this.Ping.DataPropertyName = "Ping";
-			this.Ping.HeaderText = "Ping";
-			this.Ping.Name = "Ping";
-			this.Ping.ReadOnly = true;
-			this.Ping.Width = 53;
+			this.systemerDataSource.DataSource = typeof(AutosysMonitor.IAutosysSystem);
 			// 
 			// StatusForm
 			// 
