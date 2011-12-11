@@ -76,18 +76,17 @@ namespace AutosysMonitor
 			if (e.ColumnIndex != StatusColumn.DisplayIndex)
 				return;
 			var sys = systemList[e.RowIndex];
-			Image ball;
-			if (sys.GetType() == typeof(LineSplitter))
-				return;
+			Brush brush;
 			if (sys.Alive)
 			{
 				//e.Value = global::AutosysMonitor.Properties.Resources.Red_ball;
-				ball = Properties.Resources.Green_ball;
+				brush = Brushes.Green;
 			}
 			else
 			{
-				ball = Properties.Resources.Red_ball;
+				brush = Brushes.Red;
 			}
+			
 
 
 
@@ -95,6 +94,10 @@ namespace AutosysMonitor
 					Brush gridBrush = new SolidBrush(this.SystemView.GridColor),
 					backColorBrush = new SolidBrush(e.CellStyle.BackColor))
 			{
+				if (sys.GetType() == typeof(LineSplitter))
+				{
+					brush = backColorBrush;
+				}
 				using (Pen gridLinePen = new Pen(gridBrush))
 				{
 					// Erase the cell.
@@ -109,18 +112,20 @@ namespace AutosysMonitor
 						e.CellBounds.Top, e.CellBounds.Right - 1,
 						e.CellBounds.Bottom);
 
+
+					
 					//Draw image
 					int horsMiddle = (e.CellBounds.Left + e.CellBounds.Right) / 2;
 					int vertMiddle = (e.CellBounds.Bottom + e.CellBounds.Top) / 2;
+					var diameter = Math.Min(e.CellBounds.Width, e.CellBounds.Height);
+					diameter -= 4;
+					horsMiddle -= (diameter / 2);
+					vertMiddle -= (diameter / 2);
 
-					horsMiddle -= ball.Width / 2;
-					vertMiddle -= ball.Height / 2;
-					Rectangle bounds = new Rectangle(horsMiddle, vertMiddle, ball.Width, ball.Height);
+					Rectangle bounds = new Rectangle(horsMiddle, vertMiddle, diameter, diameter);
 
-					e.Graphics.DrawImage(ball, bounds);
-
-					// Draw the text content of the cell, ignoring alignment.
-
+					e.Graphics.FillEllipse(brush, bounds);
+					
 					e.Handled = true;
 				}
 			}

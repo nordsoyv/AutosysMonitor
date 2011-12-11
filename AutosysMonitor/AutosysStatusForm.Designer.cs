@@ -32,23 +32,22 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusForm));
 			this.UpdateAllButton = new System.Windows.Forms.Button();
 			this.Refreshtimer = new System.Windows.Forms.Timer(this.components);
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.SystemView = new System.Windows.Forms.DataGridView();
-			this.StatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
-			this.Url = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Ping = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ReloadFileButton = new System.Windows.Forms.Button();
 			this.openSystemFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.lblSetRefreshTime = new System.Windows.Forms.Label();
 			this.txtSetRefreshtime = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ckbRefreshEnabled = new System.Windows.Forms.CheckBox();
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.aliveDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.systemerDataSource = new System.Windows.Forms.BindingSource(this.components);
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.StatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
+			this.Url = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.aliveDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.Ping = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.SystemView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.systemerDataSource)).BeginInit();
 			this.SuspendLayout();
@@ -118,30 +117,6 @@
 			this.SystemView.TabIndex = 0;
 			this.SystemView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.SystemView_CellPainting);
 			// 
-			// StatusColumn
-			// 
-			this.StatusColumn.HeaderText = "Status";
-			this.StatusColumn.Image = ((System.Drawing.Image)(resources.GetObject("StatusColumn.Image")));
-			this.StatusColumn.Name = "StatusColumn";
-			this.StatusColumn.ReadOnly = true;
-			this.StatusColumn.Width = 43;
-			// 
-			// Url
-			// 
-			this.Url.DataPropertyName = "Url";
-			this.Url.HeaderText = "Url";
-			this.Url.Name = "Url";
-			this.Url.ReadOnly = true;
-			this.Url.Width = 45;
-			// 
-			// Ping
-			// 
-			this.Ping.DataPropertyName = "Ping";
-			this.Ping.HeaderText = "Ping";
-			this.Ping.Name = "Ping";
-			this.Ping.ReadOnly = true;
-			this.Ping.Width = 53;
-			// 
 			// ReloadFileButton
 			// 
 			this.ReloadFileButton.Location = new System.Drawing.Point(124, 12);
@@ -195,6 +170,10 @@
 			this.ckbRefreshEnabled.UseVisualStyleBackColor = true;
 			this.ckbRefreshEnabled.CheckedChanged += new System.EventHandler(this.ckbRefreshEnabled_CheckedChanged);
 			// 
+			// systemerDataSource
+			// 
+			this.systemerDataSource.DataSource = typeof(AutosysMonitor.IAutosysSystem);
+			// 
 			// dataGridViewTextBoxColumn1
 			// 
 			this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
@@ -202,6 +181,21 @@
 			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
 			this.dataGridViewTextBoxColumn1.ReadOnly = true;
 			this.dataGridViewTextBoxColumn1.Width = 60;
+			// 
+			// StatusColumn
+			// 
+			this.StatusColumn.HeaderText = "Status";
+			this.StatusColumn.Name = "StatusColumn";
+			this.StatusColumn.ReadOnly = true;
+			this.StatusColumn.Width = 43;
+			// 
+			// Url
+			// 
+			this.Url.DataPropertyName = "Url";
+			this.Url.HeaderText = "Url";
+			this.Url.Name = "Url";
+			this.Url.ReadOnly = true;
+			this.Url.Width = 45;
 			// 
 			// aliveDataGridViewCheckBoxColumn
 			// 
@@ -212,9 +206,13 @@
 			this.aliveDataGridViewCheckBoxColumn.Visible = false;
 			this.aliveDataGridViewCheckBoxColumn.Width = 36;
 			// 
-			// systemerDataSource
+			// Ping
 			// 
-			this.systemerDataSource.DataSource = typeof(AutosysMonitor.IAutosysSystem);
+			this.Ping.DataPropertyName = "Ping";
+			this.Ping.HeaderText = "Ping";
+			this.Ping.Name = "Ping";
+			this.Ping.ReadOnly = true;
+			this.Ping.Width = 53;
 			// 
 			// StatusForm
 			// 
@@ -247,15 +245,15 @@
         private System.Windows.Forms.Button ReloadFileButton;
 		private System.Windows.Forms.BindingSource systemerDataSource;
 		private System.Windows.Forms.OpenFileDialog openSystemFileDialog;
+		private System.Windows.Forms.Label lblSetRefreshTime;
+		private System.Windows.Forms.TextBox txtSetRefreshtime;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.CheckBox ckbRefreshEnabled;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewImageColumn StatusColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Url;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn aliveDataGridViewCheckBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Ping;
-		private System.Windows.Forms.Label lblSetRefreshTime;
-		private System.Windows.Forms.TextBox txtSetRefreshtime;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.CheckBox ckbRefreshEnabled;
     }
 }
 
