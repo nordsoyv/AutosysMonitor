@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\systemer.txt" />
+    <Content Include="bin\Release\systemer.txt" />
     <Content Include="Resources\Green-ball.png" />
     <Content Include="Resources\Red-ball.png" />
     <Content Include="systemer.txt" />

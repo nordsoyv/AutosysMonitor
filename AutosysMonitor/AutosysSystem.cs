@@ -14,6 +14,8 @@ namespace AutosysMonitor
         public int Timeout { get; set; }
         public bool Alive { get; set; }
         public long Ping { get; set; }
+        public String Tags { get; set; }
+
     	public void Update()
     	{
 
@@ -29,6 +31,12 @@ namespace AutosysMonitor
 			}
 			catch (WebException ex)
 			{
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+                    var code = ((HttpWebResponse)ex.Response).StatusCode;
+                    var desc = ((HttpWebResponse)ex.Response).StatusDescription;
+                    
+                }
 				Alive = false;
 				return;
 			}

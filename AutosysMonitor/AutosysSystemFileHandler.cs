@@ -58,6 +58,11 @@ namespace AutosysMonitor
 			{
 				sys.Timeout = 2000;
 			}
+            if (info.Length > 3)
+            {
+                sys.Tags = info[3];
+
+            }
 			return sys;
 		}
 	}

@@ -16,7 +16,8 @@ namespace AutosysMonitor
 	{
 		private const string SYSTEMS = "systemer.txt";
 
-		private List<IAutosysSystem> systemList = new List<IAutosysSystem>();
+		private List<IAutosysSystem> currentSystemList = new List<IAutosysSystem>();
+        private List<IAutosysSystem> masterSystemList = new List<IAutosysSystem>();
 
 		public StatusForm()
 		{
@@ -38,7 +39,8 @@ namespace AutosysMonitor
 
 		private void ReadSystemsFromFile(string filename)
 		{
-			systemList = AutosysSystemFileHandler.ReadFromFile(filename);
+            masterSystemList = AutosysSystemFileHandler.ReadFromFile(filename);
+            currentSystemList = masterSystemList.ToList();
 		}
 
 		private void UpdateAllButton_Click(object sender, EventArgs e)
@@ -73,70 +75,77 @@ namespace AutosysMonitor
 
 			if (e.RowIndex < 0)
 				return;
-			if (e.ColumnIndex != StatusColumn.DisplayIndex)
-				return;
-			var sys = systemList[e.RowIndex];
-			Brush brush;
-			if (sys.Alive)
-			{
-				//e.Value = global::AutosysMonitor.Properties.Resources.Red_ball;
-				brush = Brushes.Green;
-			}
-			else
-			{
-				brush = Brushes.Red;
-			}
-			
-
-
-
-			using (
-					Brush gridBrush = new SolidBrush(this.SystemView.GridColor),
-					backColorBrush = new SolidBrush(e.CellStyle.BackColor))
-			{
-				if (sys.GetType() == typeof(LineSplitter))
-				{
-					brush = backColorBrush;
-				}
-				using (Pen gridLinePen = new Pen(gridBrush))
-				{
-					// Erase the cell.
-					e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
-
-					// Draw the grid lines (only the right and bottom lines;
-					// DataGridView takes care of the others).
-					e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
-						e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
-						e.CellBounds.Bottom - 1);
-					e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
-						e.CellBounds.Top, e.CellBounds.Right - 1,
-						e.CellBounds.Bottom);
-
-
-					
-					//Draw image
-					int horsMiddle = (e.CellBounds.Left + e.CellBounds.Right) / 2;
-					int vertMiddle = (e.CellBounds.Bottom + e.CellBounds.Top) / 2;
-					var diameter = Math.Min(e.CellBounds.Width, e.CellBounds.Height);
-					diameter -= 4;
-					horsMiddle -= (diameter / 2);
-					vertMiddle -= (diameter / 2);
-
-					Rectangle bounds = new Rectangle(horsMiddle, vertMiddle, diameter, diameter);
-
-					e.Graphics.FillEllipse(brush, bounds);
-					
-					e.Handled = true;
-				}
-			}
+            if (e.ColumnIndex == StatusColumn.DisplayIndex)
+            {
+                DrawStatusCell(e);
+            }
+            
 
 
 		}
 
+        private void DrawStatusCell(DataGridViewCellPaintingEventArgs e)
+        {
+            var sys = currentSystemList[e.RowIndex];
+            Brush brush;
+            if (sys.Alive)
+            {
+                //e.Value = global::AutosysMonitor.Properties.Resources.Red_ball;
+                brush = Brushes.Green;
+            }
+            else
+            {
+                brush = Brushes.Red;
+            }
+
+
+
+
+            using (
+                    Brush gridBrush = new SolidBrush(this.SystemView.GridColor),
+                    backColorBrush = new SolidBrush(e.CellStyle.BackColor))
+            {
+                if (sys.GetType() == typeof(LineSplitter))
+                {
+                    brush = backColorBrush;
+                }
+                using (Pen gridLinePen = new Pen(gridBrush))
+                {
+                    // Erase the cell.
+                    e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
+
+                    // Draw the grid lines (only the right and bottom lines;
+                    // DataGridView takes care of the others).
+                    e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
+                        e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
+                        e.CellBounds.Bottom - 1);
+                    e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
+                        e.CellBounds.Top, e.CellBounds.Right - 1,
+                        e.CellBounds.Bottom);
+
+
+
+                    //Draw image
+                    int horsMiddle = (e.CellBounds.Left + e.CellBounds.Right) / 2;
+                    int vertMiddle = (e.CellBounds.Bottom + e.CellBounds.Top) / 2;
+                    var diameter = Math.Min(e.CellBounds.Width, e.CellBounds.Height);
+                    diameter -= 4;
+                    horsMiddle -= (diameter / 2);
+                    vertMiddle -= (diameter / 2);
+
+                    Rectangle bounds = new Rectangle(horsMiddle, vertMiddle, diameter, diameter);
+
+                    e.Graphics.FillEllipse(brush, bounds);
+
+                    e.Handled = true;
+                }
+            }
+        }
+
 		private void ReloadFileButton_Click(object sender, EventArgs e)
 		{
 			var result = openSystemFileDialog.ShowDialog();
-			systemList.Clear();
+			currentSystemList.Clear();
 			ReadSystemsFromFile(openSystemFileDialog.FileName);
 			SystemView.Invalidate();
 			SystemView.Update();
@@ -151,10 +160,10 @@ namespace AutosysMonitor
 
 		private void UpdateDataSource()
 		{
-			lock (systemList)
+			lock (currentSystemList)
 			{
 				systemerDataSource.Clear();
-				foreach (var item in systemList)
+				foreach (var item in currentSystemList)
 				{
 					systemerDataSource.Add(item);
 				}
@@ -164,7 +173,7 @@ namespace AutosysMonitor
 
 		private void updateAll()
 		{
-			List<IAutosysSystem> tempList = new List<IAutosysSystem>(systemList);
+			List<IAutosysSystem> tempList = new List<IAutosysSystem>(currentSystemList);
 
 
 			foreach (IAutosysSystem item in tempList)
@@ -172,12 +181,12 @@ namespace AutosysMonitor
 				item.Update();
 			}
 
-			lock (systemList)
+			lock (currentSystemList)
 			{
-				systemList.Clear();
+				currentSystemList.Clear();
 				foreach (var item in tempList)
 				{
-					systemList.Add(item);
+					currentSystemList.Add(item);
 				}
 			}
 
@@ -211,6 +220,31 @@ namespace AutosysMonitor
 				txtSetRefreshtime.Enabled = false;
 			}
 		}
+
+        private void systemerDataSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SystemView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            var filterString = txtFilter.Text;
+            var filterStrings = filterString.Split(' ');
+            var query = masterSystemList.Select(n => n);
+            foreach (var filter in filterStrings)
+            {
+                query = query.Where(s=> s.Tags != null). Where(s => s.Tags.Contains(filter)).Select(s=>s);
+
+
+            }
+            currentSystemList = query.ToList();
+            updateAll();
+        }
 	}
 
 
