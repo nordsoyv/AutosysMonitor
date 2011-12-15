@@ -233,17 +233,23 @@ namespace AutosysMonitor
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
+            if (backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.CancelAsync();
+            }
+
             var filterString = txtFilter.Text;
             var filterStrings = filterString.Split(' ');
-            var query = masterSystemList.Select(n => n);
+            var filteredList = masterSystemList.Select(n => n).ToList();
             foreach (var filter in filterStrings)
             {
-                query = query.Where(s=> s.Tags != null). Where(s => s.Tags.Contains(filter)).Select(s=>s);
+                filteredList = filteredList.Where(s => s.Tags != null).Where(s => s.Tags.Contains(filter)).Select(s => s).ToList();
 
 
             }
-            currentSystemList = query.ToList();
-            updateAll();
+            currentSystemList = filteredList;
+            SystemView.Invalidate();
+            SystemView.Update();
         }
 	}
 

@@ -36,13 +36,6 @@
             this.Refreshtimer = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SystemView = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.timeoutDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tags = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.systemerDataSource = new System.Windows.Forms.BindingSource(this.components);
             this.ReloadFileButton = new System.Windows.Forms.Button();
             this.openSystemFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.lblSetRefreshTime = new System.Windows.Forms.Label();
@@ -52,6 +45,12 @@
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnFilter = new System.Windows.Forms.Button();
+            this.systemerDataSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.pingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tags = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SystemView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.systemerDataSource)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +73,7 @@
             // 
             // backgroundWorker1
             // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // SystemView
@@ -95,7 +95,6 @@
             this.nameDataGridViewTextBoxColumn,
             this.urlDataGridViewTextBoxColumn,
             this.StatusColumn,
-            this.timeoutDataGridViewTextBoxColumn,
             this.pingDataGridViewTextBoxColumn,
             this.Tags});
             this.SystemView.DataSource = this.systemerDataSource;
@@ -122,58 +121,6 @@
             this.SystemView.TabIndex = 0;
             this.SystemView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SystemView_CellContentClick);
             this.SystemView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.SystemView_CellPainting);
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // urlDataGridViewTextBoxColumn
-            // 
-            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
-            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
-            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
-            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.urlDataGridViewTextBoxColumn.Width = 45;
-            // 
-            // StatusColumn
-            // 
-            this.StatusColumn.HeaderText = "Status";
-            this.StatusColumn.Name = "StatusColumn";
-            this.StatusColumn.ReadOnly = true;
-            this.StatusColumn.Width = 43;
-            // 
-            // timeoutDataGridViewTextBoxColumn
-            // 
-            this.timeoutDataGridViewTextBoxColumn.DataPropertyName = "Timeout";
-            this.timeoutDataGridViewTextBoxColumn.HeaderText = "Timeout";
-            this.timeoutDataGridViewTextBoxColumn.Name = "timeoutDataGridViewTextBoxColumn";
-            this.timeoutDataGridViewTextBoxColumn.ReadOnly = true;
-            this.timeoutDataGridViewTextBoxColumn.Width = 70;
-            // 
-            // pingDataGridViewTextBoxColumn
-            // 
-            this.pingDataGridViewTextBoxColumn.DataPropertyName = "Ping";
-            this.pingDataGridViewTextBoxColumn.HeaderText = "Ping";
-            this.pingDataGridViewTextBoxColumn.Name = "pingDataGridViewTextBoxColumn";
-            this.pingDataGridViewTextBoxColumn.ReadOnly = true;
-            this.pingDataGridViewTextBoxColumn.Width = 53;
-            // 
-            // Tags
-            // 
-            this.Tags.DataPropertyName = "Tags";
-            this.Tags.HeaderText = "Tags";
-            this.Tags.Name = "Tags";
-            this.Tags.ReadOnly = true;
-            this.Tags.Width = 56;
-            // 
-            // systemerDataSource
-            // 
-            this.systemerDataSource.DataSource = typeof(AutosysMonitor.IAutosysSystem);
-            this.systemerDataSource.CurrentChanged += new System.EventHandler(this.systemerDataSource_CurrentChanged);
             // 
             // ReloadFileButton
             // 
@@ -255,6 +202,50 @@
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
+            // systemerDataSource
+            // 
+            this.systemerDataSource.DataSource = typeof(AutosysMonitor.IAutosysSystem);
+            this.systemerDataSource.CurrentChanged += new System.EventHandler(this.systemerDataSource_CurrentChanged);
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // urlDataGridViewTextBoxColumn
+            // 
+            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
+            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
+            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
+            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.urlDataGridViewTextBoxColumn.Width = 45;
+            // 
+            // StatusColumn
+            // 
+            this.StatusColumn.HeaderText = "Status";
+            this.StatusColumn.Name = "StatusColumn";
+            this.StatusColumn.ReadOnly = true;
+            this.StatusColumn.Width = 43;
+            // 
+            // pingDataGridViewTextBoxColumn
+            // 
+            this.pingDataGridViewTextBoxColumn.DataPropertyName = "Ping";
+            this.pingDataGridViewTextBoxColumn.HeaderText = "Ping";
+            this.pingDataGridViewTextBoxColumn.Name = "pingDataGridViewTextBoxColumn";
+            this.pingDataGridViewTextBoxColumn.ReadOnly = true;
+            this.pingDataGridViewTextBoxColumn.Width = 53;
+            // 
+            // Tags
+            // 
+            this.Tags.DataPropertyName = "Tags";
+            this.Tags.HeaderText = "Tags";
+            this.Tags.Name = "Tags";
+            this.Tags.ReadOnly = true;
+            this.Tags.Width = 56;
+            // 
             // StatusForm
             // 
             this.ClientSize = new System.Drawing.Size(778, 532);
@@ -299,7 +290,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn urlDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewImageColumn StatusColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeoutDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pingDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tags;
     }
